@@ -1,4 +1,5 @@
 <div class="expander" (mousedown)="startResize($event)">
+    <div class="shawdow-expander" *ngIf="showShadowVertical" [ngStyle]="{ 'right.px': shadowRight}"></div>
 </div>
 <div class="farbar-container" [ngStyle]="{'width.px': width}">
     <p>farbar works!</p>

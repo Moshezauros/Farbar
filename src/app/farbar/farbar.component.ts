@@ -12,10 +12,15 @@ export class FarbarComponent implements OnInit {
   currentMousePosition: number;
   resizeSubscription: Subscription;
   resizeObservable: Observable<Event>;
+  mouseMovementObservable: Observable<Event>;
+  mouseMoveSubscription: Subscription;
+  showShadowVertical: boolean;
+  shadowRight: number;
 
   constructor() {
     this.width = 150;
     this.resizeObservable = fromEvent(window, "mouseup");
+    this.mouseMovementObservable = fromEvent(window, "mousemove");
   }
 
   ngOnInit(): void {
@@ -33,6 +38,10 @@ export class FarbarComponent implements OnInit {
       .subscribe(res => this.setNewWidth(res as MouseEvent));
     // need to listen to two events - one for mouse up, to stop resizing and set new width,
     // and the second to update the poistion of the "shadow" vertical line
+    this.mouseMoveSubscription = this.mouseMovementObservable
+      .subscribe(($mouseMove) => this.shadowVertical($mouseMove as MouseEvent));
+    this.showShadowVertical = true;
+    this.shadowRight = $event.clientX;
   }
 
   setNewWidth($event: MouseEvent): void {
@@ -46,6 +55,11 @@ export class FarbarComponent implements OnInit {
 
     this.resizeSubscription.unsubscribe();
     this.resizeSubscription = null;
+    this.mouseMoveSubscription.unsubscribe();
     console.log("done with setNewWidth");
+  }
+
+  shadowVertical($event: MouseEvent): void {
+    console.log("woff");
   }
 }
