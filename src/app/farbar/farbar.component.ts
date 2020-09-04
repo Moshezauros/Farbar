@@ -9,7 +9,7 @@ import { $ } from 'protractor';
 })
 export class FarbarComponent implements OnInit {
   width: number;
-  currentMousePosition: number;
+  sidebarBorderStartPosition: number;
   resizeSubscription: Subscription;
   resizeObservable: Observable<Event>;
   mouseMovementObservable: Observable<Event>;
@@ -27,9 +27,11 @@ export class FarbarComponent implements OnInit {
   }
 
   startResize($event: MouseEvent): void {
+    $event.preventDefault();
     console.log("mousedown clicked");
     console.log(`current width: ${$event.clientX}`);
-    this.currentMousePosition = $event.clientX;
+    this.sidebarBorderStartPosition = $event.clientX;
+
 
     // if (this.resizeSubscription && !this.resizeSubscription.closed) {
     //   return;
@@ -41,7 +43,7 @@ export class FarbarComponent implements OnInit {
     this.mouseMoveSubscription = this.mouseMovementObservable
       .subscribe(($mouseMove) => this.shadowVertical($mouseMove as MouseEvent));
     this.showShadowVertical = true;
-    this.shadowRight = $event.clientX;
+    this.shadowRight = 0;
   }
 
   setNewWidth($event: MouseEvent): void {
@@ -50,16 +52,28 @@ export class FarbarComponent implements OnInit {
     }
     const newWidth = $event.clientX;
 
-    const diff = this.currentMousePosition - newWidth;
+    const diff = this.sidebarBorderStartPosition - newWidth;
     this.width += diff;
+
+    this.stopResize();
+    console.log("done with setNewWidth");
+  }
+
+  private stopResize(): void {
+    console.log('stopping resize');
 
     this.resizeSubscription.unsubscribe();
     this.resizeSubscription = null;
     this.mouseMoveSubscription.unsubscribe();
-    console.log("done with setNewWidth");
+    this.mouseMoveSubscription = null;
+    this.showShadowVertical = false;
   }
 
   shadowVertical($event: MouseEvent): void {
-    console.log("woff");
+    $event.preventDefault();
+    if ($event.button !== 0 || $event.buttons === 0) {
+      this.stopResize();
+    }
+    this.shadowRight = this.sidebarBorderStartPosition - $event.clientX;
   }
 }
