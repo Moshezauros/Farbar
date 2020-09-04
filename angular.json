@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "farbar"
+    }
+  },
+  "defaultProject": "farbar",
+  "cli": {
+    "analytics": "a2f9657f-2730-457c-aa7c-8a9b6b1ac5b0"
+  }
 }
