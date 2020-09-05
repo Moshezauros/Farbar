@@ -32,6 +32,7 @@ export class FarbarComponent implements OnInit {
     // the width of the expander element
     this.shadowRight = 6;
 
+    // TO-DO: set boundries
 
     this.resizeSubscription = this.resizeObservable
       .subscribe(res => this.setNewWidth(res as MouseEvent));
@@ -68,6 +69,6 @@ export class FarbarComponent implements OnInit {
     if ($event.button !== 0 || $event.buttons === 0) {
       this.stopResize();
     }
-    this.shadowRight = this.sidebarBorderStartPosition - $event.clientX;
+    this.shadowRight = this.sidebarBorderStartPosition - $event.clientX + 6;
   }
 }
