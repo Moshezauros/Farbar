@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FarbarComponent } from './farbar/farbar.component';
+import { AccordionComponent } from './accordion/accordion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FarbarComponent
+    FarbarComponent,
+    AccordionComponent
   ],
   imports: [
     BrowserModule,

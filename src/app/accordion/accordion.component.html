@@ -1,0 +1,5 @@
+<div *ngFor="let tab of tabs" (click)="tab.open = !tab.open" class="tab-item">
+    <p>
+        {{ tab.title }} - {{ tab.open }}
+    </p>
+</div>
