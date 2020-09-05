@@ -28,22 +28,16 @@ export class FarbarComponent implements OnInit {
 
   startResize($event: MouseEvent): void {
     $event.preventDefault();
-    console.log("mousedown clicked");
-    console.log(`current width: ${$event.clientX}`);
     this.sidebarBorderStartPosition = $event.clientX;
+    // the width of the expander element
+    this.shadowRight = 6;
 
 
-    // if (this.resizeSubscription && !this.resizeSubscription.closed) {
-    //   return;
-    // }
     this.resizeSubscription = this.resizeObservable
       .subscribe(res => this.setNewWidth(res as MouseEvent));
-    // need to listen to two events - one for mouse up, to stop resizing and set new width,
-    // and the second to update the poistion of the "shadow" vertical line
     this.mouseMoveSubscription = this.mouseMovementObservable
       .subscribe(($mouseMove) => this.shadowVertical($mouseMove as MouseEvent));
     this.showShadowVertical = true;
-    this.shadowRight = 0;
   }
 
   setNewWidth($event: MouseEvent): void {

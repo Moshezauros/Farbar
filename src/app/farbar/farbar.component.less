@@ -1,13 +1,22 @@
+.farbar-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    min-width: 20px;
+}
+
 .expander {
     height: 100%;
     width: 6px;
     border-left: 1px solid gray;
-    position: relative;
+    position: absolute;
 
     &:hover {
         cursor: ew-resize;
         border-left: 2px solid black;
     }
+
     .shawdow-expander {
         position: absolute;
         top: 0;
@@ -15,10 +24,19 @@
         height: 100%;
         z-index: 1;
         background: darkgray;
+
+
+        &::after {
+            position: absolute;
+            content: '';
+            width: 10px;
+            right: 0;
+            cursor: ew-resize;
+            height: 100%;
+
+            &:hover {
+                cursor: ew-resize;
+            }
+        }
     }
 }
-
-// .farbar-container {
-//     position: relative;
-
-// }
